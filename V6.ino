@@ -9,7 +9,7 @@ static const u1_t PROGMEM APPSKEY[16] = { ... };
 // LoRaWAN end-device address (DevAddr)
 static const u4_t DEVADDR = 0x.....;
 
-// VARIABELEN:
+// VARIABLES:
 float tempDht; //DHT11 Sensor
 byte humiDht; //DHT11 Sensor
 float tempBmp; //BMP280 Sensor
