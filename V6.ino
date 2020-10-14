@@ -124,7 +124,7 @@ void do_send(osjob_t* j) {
   // Average temperature calculation:
   uint32_t gemTemp = ( (tempDht + tempBmp) / 2 ) * 100;
 
-  // Value's in payload:
+  // Values in payload:
   // DHT Temp:
   payload[0] = highByte(tempDhtInt);
   payload[1] = lowByte(tempDhtInt);
