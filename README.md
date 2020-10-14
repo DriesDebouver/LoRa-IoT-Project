@@ -15,3 +15,6 @@
 - DHT11 temperature and humidity sensor
 - BMP280 temperature and pressure sensor
 - BH1750 lightsensor
+
+![Ubidots Dashboard](https://github.com/DriesDebouver/LoRa-IoT-Project/blob/main/Ubidots%20Dashboard.JPG)
+![LoRaWAN](https://www.thethingsnetwork.org/docs/lorawan/icon.png)
