@@ -3,20 +3,20 @@
 #include <SPI.h>
 
 // LoRaWAN NwkSKey, network session key
-static const PROGMEM u1_t NWKSKEY[16] = { 0x01, 0x3C, 0xEA, 0x1A, 0xA2, 0x5B, 0xA4, 0x25, 0x48, 0x11, 0x5B, 0xBF, 0x96, 0x7B, 0x61, 0x3A };
+static const PROGMEM u1_t NWKSKEY[16] = { ... };
 // LoRaWAN AppSKey, application session key
-static const u1_t PROGMEM APPSKEY[16] = { 0xC2, 0xDD, 0x25, 0x1A, 0x62, 0x5A, 0xF7, 0x53, 0xFB, 0x0D, 0xFB, 0x7C, 0xA7, 0x7D, 0xE4, 0x8A };
+static const u1_t PROGMEM APPSKEY[16] = { ... };
 // LoRaWAN end-device address (DevAddr)
-static const u4_t DEVADDR = 0x26011360;
+static const u4_t DEVADDR = 0x.....;
 
 // VARIABELEN:
-float tempDht; //huidige temperatuur van de DHT11 Sensor
-byte humiDht; //huidige vochtigheid van de DHT11 Sensor
-float tempBmp; //huidige temperatuur van de BMP280 Sensor
-int presBmp; //huidige druk van de BMP280 Sensor
-int lux; //huidige lichtintensiteit van de BH1750 Sensor
+float tempDht; //DHT11 Sensor
+byte humiDht; //DHT11 Sensor
+float tempBmp; //BMP280 Sensor
+int presBmp; //BMP280 Sensor
+int lux; //BH1750 Sensor
 
-//DHT11 Sensor - Digitale pin 3:
+//DHT11 Sensor - Digital pin 3:
 #include "DHT.h"
 #define DHTPIN 3
 #define DHTTYPE DHT11
@@ -34,7 +34,6 @@ BH1750 lightMeter;
 
 // DATA:
 byte payload[10];
-
 static osjob_t sendjob;
 
 // Schedule TX every this many seconds (might become longer due to duty cycle limitations).
@@ -118,21 +117,21 @@ void do_send(osjob_t* j) {
   // BH1750 SENSOR:
   luxSensor();
 
-  // float omzetten naar int:
+  // float to int:
   uint32_t tempDhtInt = tempDht * 100;
   uint32_t tempBmpInt = tempBmp * 100;
 
-  // Gemiddelde temperatuur berekening:
+  // Average temperature calculation:
   uint32_t gemTemp = ( (tempDht + tempBmp) / 2 ) * 100;
 
-  // Waardes in payload steken:
+  // Value's in payload:
   // DHT Temp:
   payload[0] = highByte(tempDhtInt);
   payload[1] = lowByte(tempDhtInt);
   // BMP Temp:
   payload[2] = highByte(tempBmpInt);
   payload[3] = lowByte(tempBmpInt);
-  // Gemiddelde Temp:
+  // Average Temp:
   payload[4] = highByte(gemTemp);
   payload[5] = lowByte(gemTemp);
   // Humidity:
@@ -207,10 +206,10 @@ void dhtSensor() {
   tempDht = dht.readTemperature();
   humiDht = dht.readHumidity();
   Serial.println(F("DHT11:"));
-  Serial.print(F("Temperatuur: "));
+  Serial.print(F("Temperature: "));
   Serial.print(tempDht);
   Serial.println(F(" °C"));
-  Serial.print(F("Vochtigheid: "));
+  Serial.print(F("Humidity: "));
   Serial.print(humiDht);
   Serial.println(F(" %"));
 }
@@ -220,10 +219,10 @@ void bmpSensor() {
   tempBmp = bmp.readTemperature();
   presBmp = bmp.readPressure() / 100;
   Serial.println(F("BMP280:"));
-  Serial.print(F("Temperatuur: "));
+  Serial.print(F("Temperature: "));
   Serial.print(tempBmp);
   Serial.println(F(" °C"));
-  Serial.print(F("Druk: "));
+  Serial.print(F("Pressure: "));
   Serial.print(presBmp);
   Serial.println(F(" mb / hPa"));
 }
@@ -233,7 +232,7 @@ void luxSensor() {
   lightMeter.begin();
   lux = lightMeter.readLightLevel();
   Serial.println(F("BH1750:"));
-  Serial.print(F("Licht: "));
+  Serial.print(F("Light: "));
   Serial.print(lux);
   Serial.println(F(" lux"));
 }
